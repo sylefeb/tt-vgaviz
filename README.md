@@ -80,7 +80,7 @@ async def test_project(dut):
         prev_vs = dut.uo_out.value.binstr[7-3]
 ```
 
-Run the simulation with
+Run the simulation from within `{tt_project_directory}/test/` with
 ```
 make -B WAVES=1
 ```
@@ -90,9 +90,9 @@ The file is output as `tb.fst`. You can then run the tool using `./tt-vgaviz {tt
 
 ### 3) Gate level simulation
 
-To run the gate level simulation, download the `tt_submission.zip` artifact from the GDS action summary, then copy the file from inside it `tt_submission/{your_module_name}.v` as `gate_level_netlist.v`.
+To run the gate level simulation, download the `tt_submission.zip` artifact from the GDS action summary, then copy the file from inside it `tt_submission/{your_module_name}.v` as `{tt_project_directory}/test/gate_level_netlist.v` (see also https://github.com/TinyTapeout/tt08-verilog-template/blob/main/test/README.md).
 
-Execute 
+Execute from within `{tt_project_directory}/test/`
 ```
 make -B GATES=yes WAVES=1
 ```
@@ -103,6 +103,6 @@ Be patient, it can take several minutes to see the picture appear (as long as it
 
 ## I see nothing !?!
 
-Use `gtkwave` to visualize the trace and check vertical sync (uo_out[3]) and horzontal sync (uo_out[7]) for activity. Also lookout for any 'x' state, these are usually not a good sign beyond reset.
+Use `gtkwave` to visualize the trace and check vertical sync (uo_out[3]) and horizontal sync (uo_out[7]) for activity. Also lookout for any 'x' state, these are usually not a good sign beyond reset.
 
-Hope this will be useful! If you like it, a little tar is welcome :)
+Hope this will be useful! If you like it, a little star is welcome :)

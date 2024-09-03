@@ -225,7 +225,7 @@ void VideoOut::eval_RGB_HV
 
                     image->pixel((int)(hcount), (int)(vcount)) = v4b(pixel.Red,pixel.Green,pixel.Blue,255);
                     image_changed = true;
-//                    printf("*** [pixel write at %d,%d]\n",hcount,vcount);
+                    // printf("*** [pixel write at %d,%d]\n",hcount,vcount);
                 }
             }
         }

@@ -75,17 +75,32 @@ void value_change_callback(void* user_callback_data_pointer, uint64_t time, fstH
 
   g_Values[g_HandleToName[facidx]] = decodeValue((const char*)value);
 
-  static bool prev_clk = false;
-  bool clk = g_Values["__main_video_clock"];
+  static bool prev_clk  = false;
+  static int  clk_count = 0;
+  bool clk = g_Values["clk"];
   if (clk != prev_clk) {
     prev_clk = clk;
+    if ((clk_count & 1023) == 0) {
+      std::cerr << '.';
+    }
+    ++ clk_count;
+    uint8_t uo_out = g_Values["uo_out [7:0]"];
     g_VGA.step(
       clk,
-      (uint8_t)g_Values["__main_video_vs"],
-      (uint8_t)g_Values["__main_video_hs"],
-      (uint8_t)g_Values["__main_video_r [5:0]"],
-      (uint8_t)g_Values["__main_video_g [5:0]"],
-      (uint8_t)g_Values["__main_video_b [5:0]"]
+      (uint8_t)((uo_out>>3)&1), //vs
+      (uint8_t)((uo_out>>7)&1), //hs
+      (uint8_t)(
+        (((uo_out>>0)&1)<<0)
+       |(((uo_out>>4)&1)<<1)
+      ),  //r
+      (uint8_t)(
+        (((uo_out>>1)&1)<<0)
+       |(((uo_out>>5)&1)<<1)
+      ),  //g
+      (uint8_t)(
+        (((uo_out>>2)&1)<<0)
+       |(((uo_out>>6)&1)<<1)
+      )   //b
     );
 
     std::this_thread::yield();
@@ -109,7 +124,7 @@ int main(int argc,char **argv)
       return -1;
     }
 
-    SimpleUI::init(g_VGA.w(), g_VGA.h(), "Silice Hardware Emulator");
+    SimpleUI::init(g_VGA.w(), g_VGA.h(), "VGA Trace Visualizer");
 
     SimpleUI::onRender = main_render;
 
@@ -144,6 +159,8 @@ int main(int argc,char **argv)
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
     glDisable(GL_LIGHTING);
+
+    std::cerr << "Please wait, it can take a while (alive while dots appear) ";
 
     SimpleUI::loop();
 

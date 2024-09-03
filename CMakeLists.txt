@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
-project(viztrace)
+project(tt-vgaviz)
 
 include(FetchContent)
 
@@ -21,7 +21,22 @@ ADD_SUBDIRECTORY(libs/fstapi)
 
 FIND_PACKAGE(Threads REQUIRED)
 
-ADD_EXECUTABLE(silicehe
+# --------------------------------------
+# Customize the VGA resolution here
+
+add_compile_definitions(VGA_W=640)
+add_compile_definitions(VGA_W_FPORCH=16)
+add_compile_definitions(VGA_W_PULSE=96)
+add_compile_definitions(VGA_W_BPORCH=48)
+
+add_compile_definitions(VGA_H=480)
+add_compile_definitions(VGA_H_FPORCH=10)
+add_compile_definitions(VGA_H_PULSE=2)
+add_compile_definitions(VGA_H_BPORCH=33)
+
+# --------------------------------------
+
+ADD_EXECUTABLE(tt-vgaviz
   src/main.cpp
   src/VCDParser.cpp
   src/VCDParser.h
@@ -31,6 +46,4 @@ ADD_EXECUTABLE(silicehe
   src/VgaChip.h
 )
 
-TARGET_LINK_LIBRARIES(silicehe LibSL LibSL_gl fstapi Threads::Threads)
-
-INSTALL(TARGETS silicehe RUNTIME DESTINATION ${CMAKE_SOURCE_DIR}/../../bin)
+TARGET_LINK_LIBRARIES(tt-vgaviz LibSL LibSL_gl fstapi Threads::Threads)

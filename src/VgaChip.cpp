@@ -20,12 +20,12 @@ the distribution, please refer to it for details.
 
 VgaChip::VgaChip()
 {
-  m_W = 640;
-  m_H = 480;
+  m_W = VGA_W;
+  m_H = VGA_H;
   m_VideoOut = new VideoOut(
-        0/*debug*/,6/*color depth*/,0/*polarity*/,
-        m_W ,16,96,48,
-        m_H ,10,2,33,
+        0/*debug*/,2/*color depth*/,0/*polarity*/,
+        m_W,VGA_W_FPORCH,VGA_W_PULSE,VGA_W_BPORCH,
+        m_H,VGA_H_FPORCH,VGA_H_PULSE,VGA_H_BPORCH,
         "vgaout");
 }
 

@@ -2,6 +2,8 @@
 
 This tool can help you visually check the VGA traces produced by cocotb on your TinyTapeout design, following the VGA PMOD pinout (see https://tinytapeout.com/competitions/demoscene/).
 
+The default resolution is 640x480, expecting the design clock to run at the VGA clock. The VGA resolution can be adjusted in the [CMakeLists.txt](https://github.com/sylefeb/tt-vgaviz/blob/8a4bd219de0a8ebd76b91f7c0f4675eb7dc5f83b/CMakeLists.txt#L25).
+
 ## Building the tool
 
 Clone, then enter the repo directory and:
@@ -32,7 +34,7 @@ volare enable --pdk sky130 cd1748bb197f9b7af62a54507de6624e30363943
 
 ### 2) Simulation
 
-I am using the following `test.py`. Note that it takes a long time so it probably isn't well suited to push to be used in the tt08 github workflow.
+I am using the following `test.py`. Note that it takes a long time and does not really implement any test, so it is not well suited to push to be used in the tt08 github workflow. Its main goal is to produce the trace to check the VGA signal.
 
 ```python
 import cocotb

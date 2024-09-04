@@ -29,7 +29,7 @@ the distribution, please refer to it for details.
 using namespace LibSL::Image;
 using namespace LibSL::Math;
 
-ImageFormat_TGA g_RegisterFormat_TGA;
+ImageFormat_PNG g_RegisterFormat_PNG;
 
 // Constructor
 VideoOut::VideoOut(uint8_t debug, uint8_t depth, uint8_t polarity,
@@ -183,7 +183,7 @@ void VideoOut::eval_RGB_HV
                     v_sync_count = 0;
                     if (1) {
                         char tmp[264];
-                        sprintf(tmp, "%s_%04d.tga", filename, dump_ctr);
+                        sprintf(tmp, "%s_%04d.png", filename, dump_ctr);
                         printf(" Save snapshot in file \"%s\"\n", tmp);
                         saveImage(tmp,image);
                         dump_ctr++;

@@ -9,8 +9,6 @@
 #include "VCDParser.h"
 #include "fstapi.h"
 
-LIBSL_WIN32_FIX;
-
 // ---------------------------------------------------------------------
 
 // AutoPtr<VCDParser> g_VCD;
@@ -22,6 +20,8 @@ std::unordered_map<fstHandle, std::string> g_HandleToName;
 std::unordered_map<std::string, uint64_t>  g_Values;
 
 std::mutex         g_Mutex;
+
+bool               g_Done = false;
 
 // ---------------------------------------------------------------------
 
@@ -52,6 +52,10 @@ void main_render()
 
   // std::this_thread::yield();
   std::this_thread::sleep_for(std::chrono::milliseconds(150));
+
+  if (g_Done) {
+    SimpleUI::exit();
+  }
   
 }
 
@@ -154,6 +158,7 @@ int main(int argc,char **argv)
 
     std::thread th([](){
       fstReaderIterBlocks(g_Wave, value_change_callback, NULL, NULL);
+      g_Done = true;
     });
 
     glDisable(GL_DEPTH_TEST);
@@ -167,6 +172,8 @@ int main(int argc,char **argv)
     g_Tex = Tex2DRGBA_Ptr();
 
     SimpleUI::shutdown();
+
+    std::cerr << '\n';
 
   } catch (Fatal& f) {
     std::cerr << Console::red << "[fatal] " << f.message() << Console::gray << std::endl;

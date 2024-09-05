@@ -94,16 +94,16 @@ void value_change_callback(void* user_callback_data_pointer, uint64_t time, fstH
       (uint8_t)((uo_out>>3)&1), //vs
       (uint8_t)((uo_out>>7)&1), //hs
       (uint8_t)(
-        (((uo_out>>0)&1)<<0)
-       |(((uo_out>>4)&1)<<1)
+        (((uo_out>>0)&1)<<1)
+       |(((uo_out>>4)&1)<<0)
       ),  //r
       (uint8_t)(
-        (((uo_out>>1)&1)<<0)
-       |(((uo_out>>5)&1)<<1)
+        (((uo_out>>1)&1)<<1)
+       |(((uo_out>>5)&1)<<0)
       ),  //g
       (uint8_t)(
-        (((uo_out>>2)&1)<<0)
-       |(((uo_out>>6)&1)<<1)
+        (((uo_out>>2)&1)<<1)
+       |(((uo_out>>6)&1)<<0)
       )   //b
     );
 
